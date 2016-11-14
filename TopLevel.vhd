@@ -46,10 +46,47 @@ architecture Behavioral of TopLevel is
 		dp_out : OUT std_logic
 		);
 	END COMPONENT;
+	
+	
+	-- Declare the data memory element
+	COMPONENT Data_Memory
+	PORT(
+		clk : IN std_logic;
+		WE : IN std_logic;
+		A : IN std_logic_vector(8 downto 0);
+		WD : IN std_logic_vector(31 downto 0);          
+		RD : OUT std_logic_vector(31 downto 0)
+		);
+	END COMPONENT;
+	
+	-- Declare the Instruction Memory Component
+	COMPONENT Instruction_Memory
+	PORT(
+		A : IN std_logic_vector(8 downto 0);          
+		RD : OUT std_logic_vector(31 downto 0)
+		);
+	END COMPONENT;
+	
+	-- Declare the register file
+	COMPONENT Register_File
+	PORT(
+		clk : IN std_logic;
+		WE3 : IN std_logic;
+		A1 : IN std_logic_vector(3 downto 0);
+		A2 : IN std_logic_vector(3 downto 0);
+		A3 : IN std_logic_vector(3 downto 0);
+		WD3 : IN std_logic_vector(31 downto 0);
+		R15 : IN std_logic_vector(31 downto 0);          
+		RD1 : OUT std_logic_vector(31 downto 0);
+		RD2 : OUT std_logic_vector(31 downto 0)
+		);
+	END COMPONENT;
 
+	
+	
 	-- Signals for Hex Display
 	signal HexDisp : std_logic_vector(15 downto 0) := x"0000";
-
+	
 begin
 
 	-- Instantiate Hex to 7-segment conversion module
@@ -64,7 +101,35 @@ begin
 		dp_out => Seg7_DP,
 		clk => Osc_Clk
 	);
-		
+	
+	-- Instatiate Data Memory Element
+	Data_Memory: Data_Memory PORT MAP(
+		clk => Osc_Clk,
+		WE => ,
+		A => ,
+		WD => ,
+		RD => 
+	);
+
+	
+	-- Instatiate Instruction Memory Component
+	IMem: Instruction_Memory PORT MAP(
+		A => PC,
+		RD => 
+	);
+	
+	-- Instatiate the Register File
+	RF: Register_File PORT MAP(
+		clk => ,
+		WE3 => ,
+		A1 => ,
+		A2 => ,
+		A3 => ,
+		WD3 => ,
+		R15 => ,
+		RD1 => ,
+		RD2 => 
+	);
 
 	-- Misc connections
 	LED(7 downto 0) <= "00000000";	

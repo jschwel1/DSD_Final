@@ -1,0 +1,1 @@
+vhdtdtfi -prj Final_Project -o /home/local/PODS/jschwel1/EECE351/Final_Project/Instruction_Memory.vhi -module Instruction_Memory -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work Instruction_Memory.vhd 
