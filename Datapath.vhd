@@ -38,8 +38,28 @@ end;
 
 architecture Behavioral of Datapath is
 
+	COMPONENT ARM_ALU
+	PORT(
+		A : IN std_logic_vector(31 downto 0);
+		B : IN std_logic_vector(31 downto 0);
+		ALU_Ctrl : IN std_logic_vector(1 downto 0);          
+		Result : OUT std_logic_vector(31 downto 0);
+		ALU_Flags : OUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+	
+	-- Sources A & B for the ALU
+	Signal a,b : std_logic_vector(31 downto 0);
+	
 begin
-
+	
+	ALU: ARM_ALU PORT MAP(
+		A => a,
+		B => b,
+		ALU_Ctrl => ALUControl,
+		Result => ALUResult,
+		ALU_Flags => ALUFlags
+	);
 
 end Behavioral;
 
