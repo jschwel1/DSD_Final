@@ -1,1 +1,3 @@
 work	"ARM_ALU.vhd"
+work	"Datapath.vhd"
+work	"RF.vhd"

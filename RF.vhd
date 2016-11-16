@@ -39,7 +39,7 @@ architecture Behavioral of Register_File is
 		end process;
 			
 		-- Read Address
-		process(A1,A2,R15)
+		process(A1,A2,R15, RegFile)
 			begin
 			-- Read 1 from Address 1
 			if to_integer(unsigned(A1)) = 15 then

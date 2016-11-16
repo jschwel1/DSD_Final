@@ -85,7 +85,7 @@ begin
 	N <= r_sig(31);
 	
 	-- get the sum
-	sum <= std_logic_vector(unsigned(Mux2_1) + unsigned(A));
+	sum <= std_logic_vector(resize(unsigned(Mux2_1), 33) + resize(unsigned(A), 33));
 	
 	-- Overflow Flag
 	V <= (not ( ALU_ctrl(0) xor A(31) xor B(31))) 

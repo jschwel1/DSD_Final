@@ -1,0 +1,3 @@
+vhdtdtfi -lib work Controller.vhd -prj Final_Project -o controller.spl -module controller -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family spartan3e controller.spl /home/local/PODS/jschwel1/EECE351/Final_Project/controller.sym 
+vhdtdtfi -prj Final_Project -o /home/local/PODS/jschwel1/EECE351/Final_Project/controller.vhi -module controller -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work Controller.vhd 
