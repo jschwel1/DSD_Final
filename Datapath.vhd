@@ -118,10 +118,14 @@ begin
 -- PROGRAM COUNTER STUFF----------------------------------
 --PC Register
 
-	process(clk,PC_Sig, PC_Reg)
+	process(clk,PC_Sig, PC_Reg, reset)
 		begin
 			if rising_edge(clk) then
-				PC_Reg <= PC_Sig;
+				if (reset = '1') then
+					PC_Reg <= (others => '0');
+				else
+					PC_Reg <= PC_Sig;
+				end if;
 			end if;
 	end process;
 -- PC output	

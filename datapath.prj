@@ -1,0 +1,3 @@
+vhdl work "RF.vhd"
+vhdl work "ARM_ALU.vhd"
+vhdl work "Datapath.vhd"

@@ -35,8 +35,29 @@ entity controller is -- single cycle control decoder
 end;
 architecture Behavioral of Controller is
 
+	-- Instruction Signals
+	signal cond : std_logic_vector(3 downto 0) := Instr(31 downto 28);
+	signal op : std_logic_vector(1 downto 0) := Instr(27 downto 26);
+	signal funct : std_logic_vector(5 downto 0) := Instr(25 downto 20);
+	signal Rn : std_logic_vector(3 downto 0) := Instr(19 downto 16);
+	signal Rd : std_logic_vector(3 downto 0) := Instr(15 downto 12);
+	-- Other internal signals
+	signal FlagW : std_logic_vector(1 downto 0) := "00"; -- [1] NZ (3:2) 
+																		  -- [0] CV (1:0)
+	
+	
 begin
 
+	-- signals are direct connections to the instr input
+	cond <= instr(31 downto 28);
+	op <= Instr(27 downto 26);
+	funct <= instr(25 downto 20);
+	Rn <= Instr(19 downto 16);
+	Rd <= Instr(15 downto 12);
 
+	process (Instr, clk, reset)
+	begin
+		
+	end process;
 end Behavioral;
 
