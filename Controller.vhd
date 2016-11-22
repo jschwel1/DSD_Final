@@ -269,11 +269,15 @@ begin
 	process (clk,ALUFlags, FlagW, FlagWrite, CondEx)
 	begin
 		if (rising_edge(clk)) then
-			if (flagWrite(1) = '1') then
-				Flags(3 downto 2) <= ALUFlags(3 downto 2);
-			end if;
-			if (flagWrite(0) = '1') then
-				Flags(1 downto 0) <= ALUFlags(1 downto 0);
+			if (reset = '1') then
+				Flags <= (others => '0');
+			else
+				if (flagWrite(1) = '1') then
+					Flags(3 downto 2) <= ALUFlags(3 downto 2);
+				end if;
+				if (flagWrite(0) = '1') then
+					Flags(1 downto 0) <= ALUFlags(1 downto 0);
+				end if;
 			end if;
 		end if;
 	end process;

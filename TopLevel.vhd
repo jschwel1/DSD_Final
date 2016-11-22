@@ -67,40 +67,14 @@ architecture Behavioral of TopLevel is
 		);
 	END COMPONENT;
 	
-	-- Declare the Controller
-	COMPONENT controller
+	COMPONENT arm
 	PORT(
 		clk : IN std_logic;
 		reset : IN std_logic;
-		Instr : IN std_logic_vector(31 downto 12);
-		ALUFlags : IN std_logic_vector(3 downto 0);          
-		RegSrc : OUT std_logic_vector(1 downto 0);
-		RegWrite : OUT std_logic;
-		ImmSrc : OUT std_logic_vector(1 downto 0);
-		ALUSrc : OUT std_logic;
-		ALUControl : OUT std_logic_vector(1 downto 0);
-		MemWrite : OUT std_logic;
-		MemtoReg : OUT std_logic;
-		PCSrc : OUT std_logic
-		);
-	END COMPONENT;
-	
-	-- Declare Datapath
-	COMPONENT datapath
-	PORT(
-		clk : IN std_logic;
-		reset : IN std_logic;
-		RegSrc : IN std_logic_vector(1 downto 0);
-		RegWrite : IN std_logic;
-		ImmSrc : IN std_logic_vector(1 downto 0);
-		ALUSrc : IN std_logic;
-		ALUControl : IN std_logic_vector(1 downto 0);
-		MemtoReg : IN std_logic;
-		PCSrc : IN std_logic;
 		Instr : IN std_logic_vector(31 downto 0);
 		ReadData : IN std_logic_vector(31 downto 0);          
-		ALUFlags : OUT std_logic_vector(3 downto 0);
 		PC : OUT std_logic_vector(31 downto 0);
+		MemWrite : OUT std_logic;
 		ALUResult : OUT std_logic_vector(31 downto 0);
 		WriteData : OUT std_logic_vector(31 downto 0)
 		);
@@ -108,8 +82,9 @@ architecture Behavioral of TopLevel is
 	
 	-- Interconnect signals
 	signal HexDisp : std_logic_vector(15 downto 0) := x"0000";
-	signal PC_sig : std_logic_vector(31 downto 0);
-	signal instruction : std_logic_vector(31 downto 0);
+	signal PC, Instr, ReadData, WriteData, ALUResult : std_logic_vector(31 downto 0);
+	signal MemWrite : std_logic := '0';
+	
 begin
 
 	-- Instantiate Hex to 7-segment conversion module
@@ -126,55 +101,32 @@ begin
 	);
 	
 	-- Instatiate Data Memory Element
---	Data_Memory: Data_Memory PORT MAP(
---		clk => Osc_Clk,
---		WE => ,
---		A => ,
---		WD => ,
---		RD => 
---	);
+	Data_Memory_Comp: Data_Memory PORT MAP(
+		clk => Osc_Clk,
+		WE => MemWrite,
+		A => ALUResult(8 downto 0),
+		WD => WriteData,
+		RD => ReadData
+	);
 
 	
 	-- Instatiate Instruction Memory Component
---	IMem: Instruction_Memory PORT MAP(
---		A => PC,
---		RD => 
---	);
+	IMem: Instruction_Memory PORT MAP(
+		A => PC(8 downto 0),
+		RD => Instr
+	);
 	
-	-- Instantiate the controller
---	Inst_controller: controller PORT MAP(
---		clk => Osc_clk,
---		reset => ,
---		Instr => ,
---		ALUFlags => ,
---		RegSrc => ,
---		RegWrite => ,
---		ImmSrc => ,
---		ALUSrc => ,
---		ALUControl => ,
---		MemWrite => ,
---		MemtoReg => ,
---		PCSrc => 
---	);
-	
-	-- Instantiate the Datapath
---	Inst_datapath: datapath PORT MAP(
---		clk => Osc_clk,
---		reset => ,
---		RegSrc => ,
---		RegWrite => ,
---		ImmSrc => ,
---		ALUSrc => ,
---		ALUControl => ,
---		MemtoReg => ,
---		PCSrc => ,
---		ALUFlags => ,
---		PC => ,
---		Instr => ,
---		ALUResult => ,
---		WriteData => ,
---		ReadData => 
---	);
+	-- Instantiate the ARM
+	ARM_Comp: arm PORT MAP(
+		clk => Osc_Clk,
+		reset => '0',
+		PC => PC,
+		Instr => Instr,
+		MemWrite => MemWrite,
+		ALUResult => ALUResult,
+		WriteData => WriteData,
+		ReadData =>  ReadData
+	);
 
 	-- Misc connections
 	LED(7 downto 0) <= "00000000";	

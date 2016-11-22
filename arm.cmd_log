@@ -1,1 +1,2 @@
 vhdtdtfi -prj Final_Project -o /home/local/PODS/jschwel1/EECE351/Final_Project/arm.vhi -module arm -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work ARM.vhd 
+vhdtdtfi -prj Final_Project -o C:/Users/Jacob/Desktop/VHDL/DSD_Final/arm.vhi -module arm -template C:/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work ARM.vhd 
