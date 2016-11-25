@@ -1,8 +1,2 @@
-AR register_file behavioral C:/Users/Jacob/Desktop/VHDL/DSD_Final/RF.vhd sub00/vhpl03 1479676884
-EN datapath NULL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Datapath.vhd sub00/vhpl04 1479676885
-EN arm_alu NULL C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_ALU.vhd sub00/vhpl00 1479676881
-EN register_file NULL C:/Users/Jacob/Desktop/VHDL/DSD_Final/RF.vhd sub00/vhpl02 1479676883
-AR arm_alu behavioral C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_ALU.vhd sub00/vhpl01 1479676882
-EN controller NULL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd sub00/vhpl06 1479676912
-AR datapath behavioral C:/Users/Jacob/Desktop/VHDL/DSD_Final/Datapath.vhd sub00/vhpl05 1479676886
-AR controller behavioral C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd sub00/vhpl07 1479676913
+EN controller NULL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd sub00/vhpl00 1480037400
+AR controller behavioral C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd sub00/vhpl01 1480037401

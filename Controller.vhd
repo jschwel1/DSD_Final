@@ -52,9 +52,10 @@ architecture Behavioral of Controller is
 	
 	-- Conditional Logic Signals
 	signal Flags : std_logic_vector(3 downto 0) := (others => '0');
-	signal CondEx : std_logic := '0';
+	signal CondEx, Z, N, C, V: std_logic := '0';
 	signal FlagWrite : std_logic_vector (1 downto 0) := "00";
 	signal NoWrite : std_logic := '0';
+	
 begin
 
 	-- signals are direct connections to the instr input
@@ -169,97 +170,46 @@ begin
 	------------------ Conditional Logic ------------
 	-- Conditional Mnemmonics
 	-- Flags(3:0) = NZCV
-	process(Cond)
+	
+	N <= ALUFlags(3);
+	Z <= ALUFlags(2);
+	C <= ALUFlags(1);
+	V <= ALUFlags(0);
+	process(Cond, ALUFlags)
 	begin
 		case cond is
 			when x"0" =>
-				if (flags = "-1--") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= Z;
 			when x"1" =>
-				if (flags = "-0--") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= not Z;
 			when x"2" =>
-				if (flags = "--1-") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= C;
 			when x"3" =>
-				if (flags = "--0-") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= not C;
 			when x"4" =>
-				if (flags = "1---") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= N;
 			when x"5" =>
-				if (flags = "0---") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= not N;
 			when x"6" =>
-				if (flags = "---1") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= V;
 			when x"7" =>
-				if (flags = "---0") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= not V;
 			when x"8" =>
-				if (flags = "-01-") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= (not Z) and C;
 			when x"9" =>
-				if (flags = "-1--" or flags = "--0-") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= Z or (not C);
 			when x"A" =>
-				if (not(flags = "1---" xor flags = "---1")) then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= not (N xor V);
 			when x"B" =>
-				if (flags = "1---" xor flags = "---1") then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= N xor V;
 			when x"C" =>
-				if (flags = "-1--" and (not (flags = "1---" xor flags = "---1"))) then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= (not Z) and (not (N xor V));
 			when x"D" =>
-				if (flags = "-1--" or ((flags = "1---" xor flags = "---1"))) then
-					CondEx <= '1';
-				else
-					CondEx <= '0';
-				end if;
+				CondEx <= Z or (N xor V);
 			when x"E" =>
 				CondEx <= '1';
 			when others =>
-				CondEx <= '0';
+				CondEx <= '1';
 		end case;
 	end process;
 	

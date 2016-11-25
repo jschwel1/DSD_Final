@@ -1,23 +1,7 @@
-V3 14
-FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_ALU.vhd 2016/11/16.20:43:49 P.20131013
-EN work/ARM_ALU 1479676881 FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_ALU.vhd \
-      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/ARM_ALU/Behavioral 1479676882 \
-      FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_ALU.vhd EN work/ARM_ALU 1479676881
-FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd 2016/11/20.16:21:49 P.20131013
-EN work/controller 1479676912 \
+V3 3
+FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd 2016/11/24.20:29:40 P.20131013
+EN work/controller 1480037400 \
       FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd \
-      PB ieee/std_logic_1164 1381692176
-AR work/Controller/Behavioral 1479676913 \
-      FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd EN work/controller 1479676912
-FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Datapath.vhd 2016/11/20.15:29:59 P.20131013
-EN work/datapath 1479676885 FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Datapath.vhd \
       PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/Datapath/Behavioral 1479676886 \
-      FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Datapath.vhd EN work/datapath 1479676885 \
-      CP ARM_ALU CP Register_File
-FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/RF.vhd 2016/11/16.20:43:49 P.20131013
-EN work/Register_File 1479676883 FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/RF.vhd \
-      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
-AR work/Register_File/Behavioral 1479676884 \
-      FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/RF.vhd EN work/Register_File 1479676883
+AR work/Controller/Behavioral 1480037401 \
+      FL C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd EN work/controller 1480037400
