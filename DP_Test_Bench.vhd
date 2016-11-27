@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   14:22:42 11/16/2016
+-- Create Date:   21:41:23 11/24/2016
 -- Design Name:   
--- Module Name:   /home/local/PODS/jschwel1/EECE351/Final_Project/Test_DP.vhd
+-- Module Name:   C:/Users/Jacob/Desktop/VHDL/DSD_Final/DP_Test_Bench.vhd
 -- Project Name:  Final_Project
 -- Target Device:  
 -- Tool versions:  
@@ -30,12 +30,12 @@ USE ieee.std_logic_1164.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-USE ieee.numeric_std.ALL;
+--USE ieee.numeric_std.ALL;
  
-ENTITY Test_DP IS
-END Test_DP;
+ENTITY DP_Test_Bench IS
+END DP_Test_Bench;
  
-ARCHITECTURE behavior OF Test_DP IS 
+ARCHITECTURE behavior OF DP_Test_Bench IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
@@ -59,7 +59,31 @@ ARCHITECTURE behavior OF Test_DP IS
         );
     END COMPONENT;
     
-
+	-- Test Data
+	type test_vector is record
+		RegSrc : std_logic_vector(1 downto 0);
+		RegWrite : std_logic;
+		ImmSrc : std_logic_vector(1 downto 0);
+		ALUSrc : std_logic;
+		ALUControl : std_logic_vector(1 downto 0);
+		MemtoReg : std_logic;
+		PCSrc : std_logic;
+		Instr : std_logic_vector(31 downto 0);
+		ReadData : std_logic_vector(31 downto 0);
+	end record;
+	
+	type test_data_array is array (natural range <>) of test_vector;
+	constant test_data : test_data_array :=
+	(
+	-- RegSrc(2), RegWrite(1),ImmSrc(2), ALUSrc(1)
+	-- ALUControl(2), MemtoReg, PCSrc(1), Instr, ReadData(32)
+	
+		--("00", '1',"00",), -- Load data into R5
+		(""), -- Load data into R6
+		(""), -- R7 = R5 + R6
+		("") -- Branch to 0
+	);
+	
    --Inputs
    signal clk : std_logic := '0';
    signal reset : std_logic := '0';
@@ -81,10 +105,6 @@ ARCHITECTURE behavior OF Test_DP IS
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
-	
-	
-	-- Define things....
-	
  
 BEGIN
  

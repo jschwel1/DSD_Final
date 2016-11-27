@@ -50,6 +50,7 @@ architecture Behavioral of Datapath is
 	END COMPONENT;
 	
 	COMPONENT Register_File
+	generic (data_size: natural := 32; addr_size: natural := 4 );
 	PORT(
 		clk : IN std_logic;
 		WE3 : IN std_logic;
@@ -69,6 +70,7 @@ architecture Behavioral of Datapath is
 	Signal PC_Sig, PC_Reg, PC_P8 : std_logic_vector(31 downto 0) := (others => '0'); -- PC signal to be loaded into the PC_Reg
 	Signal Result : std_logic_vector(31 downto 0) := (others => '0'); -- Result of ReadData from the data memory
 	Signal RA1, RA2 : std_logic_vector(3 downto 0) := (others => '0'); -- Read Addresses into the register file
+	
 begin
 	
 	ALU: ARM_ALU PORT MAP(

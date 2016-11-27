@@ -45,7 +45,7 @@ architecture Behavioral of Controller is
 	-- Other internal signals
 	signal FlagW : std_logic_vector(1 downto 0) := "00"; -- [1] NZ (3:2) 
 																		  -- [0] CV (1:0)
-	signal PCS, RegW, MemW, ALUOp, Branch, RegWS : std_logic := '0';
+	signal PCS, RegW, MemW, ALUOp, Branch : std_logic := '0';
 	
 	signal MainDecoder_out : std_logic_vector(9 downto 0);
 	signal MainDecoder_in :std_logic_vector(3 downto 0);
@@ -79,10 +79,10 @@ begin
 				MainDecoder_out <= "0011010100";
 			when "01-1" =>
 				MainDecoder_out <= "0101011000";
-			when "11--" =>
-				MainDecoder_out <= "1001100010"; 
 			when others =>
-				MainDecoder_out <= "0000000000";
+				MainDecoder_out <= "1001100010"; 
+		--	when others =>
+		--		MainDecoder_out <= "0000000000";
 		end case;
 	end process;
 	-- Split up MainDecoder_out into appropriate signals

@@ -18,14 +18,14 @@ entity Register_File is
 		WD3  : in std_logic_vector(data_size-1 downto 0);
 		R15  : in std_logic_vector(data_size-1 downto 0);
 		RD1  : out std_logic_vector(data_size- 1 downto 0); 
-		RD2  : out std_logic_vector(data_size-1 downto 0));
+		RD2  : out std_logic_vector(data_size-1 downto 0)) ;
 end Register_File;
 
 architecture Behavioral of Register_File is
 
 	type RegFile_type is array(0 to 2**addr_size -1) of 
 										std_logic_vector(data_size-1 downto 0);
-	Signal RegFile: RegFile_type;
+	Signal RegFile: RegFile_type  := (others => (others=>'0'));
 	
 	begin
 	--Write in Regfile
