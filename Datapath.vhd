@@ -66,7 +66,7 @@ architecture Behavioral of Datapath is
 	
 	-- Sources A & B for the ALU
 	Signal a,b : std_logic_vector(31 downto 0) := (others => '0'); -- inputs to the ALU
-	Signal R_out2  : std_logic_vector(31 downto 0) := (others => '0'); -- Output of RegFile RD2
+	Signal R_out2, ALUResult_sig  : std_logic_vector(31 downto 0) := (others => '0'); -- Output of RegFile RD2
 	Signal PC_Sig, PC_Reg, PC_P8 : std_logic_vector(31 downto 0) := (others => '0'); -- PC signal to be loaded into the PC_Reg
 	Signal Result : std_logic_vector(31 downto 0) := (others => '0'); -- Result of ReadData from the data memory
 	Signal RA1, RA2 : std_logic_vector(3 downto 0) := (others => '0'); -- Read Addresses into the register file
@@ -77,9 +77,10 @@ begin
 		A => a,
 		B => b,
 		ALU_Ctrl => ALUControl,
-		Result => ALUResult,
+		Result => ALUResult_sig,
 		ALU_Flags => ALUFlags
 	);
+	ALUResult <= ALUResult_sig;
 	
 		-- Instatiate the Register File
 	RF: Register_File PORT MAP(
@@ -116,6 +117,16 @@ begin
 	
 -- ALU STUFF
 	writeData <= R_out2;
+-- Data from ALU/Data reg
+	process(readData, ALUResult_Sig, memtoReg)
+	begin 
+		if (memtoReg = '1') then
+			result <= readData;
+		else
+			result <= ALUResult_sig;
+		end if;
+	end process;
+-- Read Data
 
 -- PROGRAM COUNTER STUFF----------------------------------
 --PC Register

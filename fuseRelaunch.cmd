@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_Test_isim_beh.exe" -prj "C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_Test_beh.prj" "work.ARM_Test" 
+-intstyle "ise" -incremental -o "/home/local/PODS/jschwel1/EECE351/DSD_Final/ARM_Test_isim_beh.exe" -prj "/home/local/PODS/jschwel1/EECE351/DSD_Final/ARM_Test_beh.prj" "work.ARM_Test" 

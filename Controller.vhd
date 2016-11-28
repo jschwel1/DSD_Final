@@ -68,16 +68,16 @@ begin
 	--------------------- Decoder --------------------------
 	-- Main Decoder
 	MainDecoder_in <= op&funct(5)&funct(0);	
-	process (op, funct)
+	process (MainDecoder_in)
 	begin
 		case MainDecoder_in is
-			when "000-" =>
+			when "0000" | "0001" =>
 				MainDecoder_out <= "0000001001";
-			when "001-" =>
+			when "0010" | "0011"=>
 				MainDecoder_out <= "0001001001";
-			when "01-0" =>
+			when "0100" | "0110"=>
 				MainDecoder_out <= "0011010100";
-			when "01-1" =>
+			when "0101" | "0111" =>
 				MainDecoder_out <= "0101011000";
 			when others =>
 				MainDecoder_out <= "1001100010"; 
@@ -86,14 +86,14 @@ begin
 		end case;
 	end process;
 	-- Split up MainDecoder_out into appropriate signals
-	Branch <= MainDecoder_out(0);
-	MemtoReg <= MainDecoder_out(1); -- OUTPUT
-	MemW <= MainDecoder_out(2);
-	ALUSrc <= MainDecoder_out(3);	-- OUTPUT
+	Branch <= MainDecoder_out(9);
+	MemtoReg <= MainDecoder_out(8); -- OUTPUT
+	MemW <= MainDecoder_out(7);
+	ALUSrc <= MainDecoder_out(6);	-- OUTPUT
 	ImmSrc <= MainDecoder_out(5 downto 4); -- OUTPUT
-	RegW <= MainDecoder_out(6);
-	RegSrc <= MainDecoder_out(8 downto 7); -- OUTPUT
-	ALUOp <= MainDecoder_out(9);
+	RegW <= MainDecoder_out(3);
+	RegSrc <= MainDecoder_out(2 downto 1); -- OUTPUT
+	ALUOp <= MainDecoder_out(0);
 	
 	-- ALU Decoder
 	process(ALUOp, funct(4 downto 0))

@@ -72,14 +72,25 @@ ARCHITECTURE behavior OF ARM_Test IS
 	type instr_set_type is array (natural range <>) of std_logic_vector(31 downto 0);
 	constant instr_set : instr_set_type :=
 		(
-	--		x"E3A05064", -- MOV R5, #100
-	--		x"E3A06045", -- MOV R6, #69
-	--		x"E1550006", -- CMP R5, R6
-	--		x"E0454006", -- SUB R4, R5, R6
-	--		x"E0857006", -- ADD R7, R5, R6
-	--		x"EA000000"  -- B #0
-			x"E4105014", -- LD x14 into R5
-			x"E4106020" -- LD x20 into R6
+			x"E0433003", -- Clear R3
+			x"E0444004", -- Clear R4
+			x"E0455005", -- Clear R5
+			x"E0466006", -- Clear R6
+			x"E2833020", -- LD R3 #32
+			x"E2844009", -- LD R4 #09
+			x"E0835004", -- ADD R5, R4, R3
+			x"E0556004", -- SUBS R6, R5, R4
+			x"E0057006",-- AND R7, R5, R6
+			x"E1838004", -- ORR R8, R3,R4
+			x"E1540003", -- CMP R4, R3
+			x"E0444009", -- Clear R9
+			x"E044400A", -- Clear R10
+			x"E28AA005", -- LD R10 #5
+			x"E15A0009", -- CMP R10, R9
+			x"0B000001", -- BEQ +2
+			x"E2899001", -- ADD R5, R4, R3
+			x"EBFFFFFA", -- B
+			x"EBFFFFFE" -- B
 		);
  
 BEGIN
