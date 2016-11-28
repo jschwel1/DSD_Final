@@ -90,9 +90,9 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;	
+   --   wait for 100 ns;	
 
-      wait for Osc_Clk_period*10;
+   --   wait for Osc_Clk_period*10;
 
       -- insert stimulus here 
 

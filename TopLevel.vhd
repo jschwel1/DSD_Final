@@ -112,7 +112,7 @@ begin
 	
 	-- Instatiate Instruction Memory Component
 	IMem: Instruction_Memory PORT MAP(
-		A => PC(8 downto 0),
+		A => (PC(10 downto 2)),
 		RD => Instr
 	);
 	
