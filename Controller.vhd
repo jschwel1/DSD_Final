@@ -171,11 +171,11 @@ begin
 	-- Conditional Mnemmonics
 	-- Flags(3:0) = NZCV
 	
-	N <= ALUFlags(3);
-	Z <= ALUFlags(2);
-	C <= ALUFlags(1);
-	V <= ALUFlags(0);
-	process(Cond, ALUFlags)
+	N <= Flags(3);
+	Z <= Flags(2);
+	C <= Flags(1);
+	V <= Flags(0);
+	process(Cond, Flags, N, Z, C, V)
 	begin
 		case cond is
 			when x"0" =>
@@ -209,7 +209,7 @@ begin
 			when x"E" =>
 				CondEx <= '1';
 			when others =>
-				CondEx <= '1';
+				CondEx <= '0';
 		end case;
 	end process;
 	

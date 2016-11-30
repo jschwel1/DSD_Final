@@ -51,7 +51,7 @@ begin
 	process(ALU_ctrl, B)
 	begin
 		if (ALU_ctrl(0) = '1') then
-			Mux2_1 <= B(31) &(not B);
+			Mux2_1 <= not B(31) &(not B);
 		else
 			Mux2_1 <= B(31)&B;
 		end if;
