@@ -5,5 +5,8 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
+<msg type="warning" file="HDLCompiler" num="1196" delta="unknown" >"/home/local/PODS/jschwel1/EECE351/DSD_Final/Instruction_Memory.vhd" Line 48: Readline called past the end of file <arg fmt="%s" index="1">rom_file</arg>
+</msg>
+
 </messages>
 

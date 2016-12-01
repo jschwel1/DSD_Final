@@ -84,6 +84,9 @@ architecture Behavioral of TopLevel is
 	signal HexDisp : std_logic_vector(15 downto 0) := x"0000";
 	signal PC, Instr, ReadData, WriteData, ALUResult : std_logic_vector(31 downto 0);
 	signal MemWrite : std_logic := '0';
+	--signal JoyUp, JoyDown, JoyLeft, JoyRight : std_logic:='0';
+	signal run,stop,step :std_logic := '1';
+	--Disable writes from memory and other 
 	
 begin
 
