@@ -71,18 +71,24 @@ begin
 	process (MainDecoder_in)
 	begin
 		case MainDecoder_in is
+			-- DP Reg
 			when "0000" | "0001" =>
 				MainDecoder_out <= "0000001001";
+			-- DP Imm
 			when "0010" | "0011"=>
 				MainDecoder_out <= "0001001001";
-			when "0100" | "0110"=>
+			-- STR Imm (Reg does not work)
+			when "0100" | "0110" =>
 				MainDecoder_out <= "0011010100";
-			when "0101" | "0111" =>
+			-- LDR Imm
+			when "0101" =>
 				MainDecoder_out <= "0101011000";
+			-- LDR Reg
+			when "0111" =>
+				MainDecoder_out <= "0100011000";
+			-- B
 			when others =>
-				MainDecoder_out <= "1001100010"; 
-		--	when others =>
-		--		MainDecoder_out <= "0000000000";
+				MainDecoder_out <= "1001100010";
 		end case;
 	end process;
 	-- Split up MainDecoder_out into appropriate signals

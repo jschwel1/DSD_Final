@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "/home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL_isim_beh.exe" -prj "/home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL_beh.prj" "work.TestTL" 
+-intstyle "ise" -incremental -o "C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL_isim_beh.exe" -prj "C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL_beh.prj" "work.TestTL" 

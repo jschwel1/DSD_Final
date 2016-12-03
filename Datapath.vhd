@@ -161,7 +161,7 @@ begin
 -- RA1
 	process(Instr, RegSrc)
 	begin
-		if (RegSrc(1) = '1') then
+		if (RegSrc(0) = '1') then
 			RA1 <= "1111";
 		else
 			RA1 <= instr(19 downto 16);
@@ -171,7 +171,7 @@ begin
 -- RA2
 	process(Instr, RegSrc)
 	begin
-		if (RegSrc(0) = '1') then
+		if (RegSrc(1) = '1') then
 			RA2 <= instr(15 downto 12);
 		else
 			RA2 <= instr(3 downto 0);
