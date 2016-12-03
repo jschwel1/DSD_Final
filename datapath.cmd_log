@@ -1,0 +1,2 @@
+vhdtdtfi -prj Final_Project -o /home/local/PODS/jschwel1/EECE351/Final_Project/datapath.vhi -module datapath -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work RF.vhd -lib work ARM_ALU.vhd -lib work Datapath.vhd 
+vhdtdtfi -prj Final_Project -o C:/Users/Jacob/Desktop/VHDL/DSD_Final/datapath.vhi -module datapath -template C:/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work RF.vhd -lib work ARM_ALU.vhd -lib work Datapath.vhd 

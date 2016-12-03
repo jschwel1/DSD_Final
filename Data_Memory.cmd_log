@@ -1,0 +1,3 @@
+vhdtdtfi -lib work Data_Memory.vhd -prj Final_Project -o Data_Memory.spl -module Data_Memory -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family spartan3e Data_Memory.spl /home/local/PODS/jschwel1/EECE351/Final_Project/Data_Memory.sym 
+vhdtdtfi -prj Final_Project -o /home/local/PODS/jschwel1/EECE351/Final_Project/Data_Memory.vhi -module Data_Memory -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work Data_Memory.vhd 
