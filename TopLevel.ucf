@@ -61,10 +61,10 @@ NET Seg7_AN(0)   LOC="P67"  | IOSTANDARD=LVTTL;                                #
 #NET VGA_RED(1)   LOC="P58"  | IOSTANDARD=LVTTL;                                # B8
 #NET VGA_RED(2)   LOC="P54"  | IOSTANDARD=LVTTL;                                # B9
 #NET AUDIO        LOC="P41"  | IOSTANDARD=LVTTL;                                # B10
-#NET JOY_RIGHT    LOC="P36"  | IOSTANDARD=LVTTL;                                # B11
+NET JOY_UP    LOC="P36"  | IOSTANDARD=LVTTL;                                # B11
 NET JOY_LEFT     LOC="P34"  | IOSTANDARD=LVTTL;                                # B12
 NET JOY_DOWN     LOC="P32"  | IOSTANDARD=LVTTL;                                # B13
-NET JOY_UP       LOC="P25"  | IOSTANDARD=LVTTL;                                # B14
+#NET JOY_UP       LOC="P25"  | IOSTANDARD=LVTTL;                                # B14
 NET JOY_SELECT   LOC="P22"  | IOSTANDARD=LVTTL;                                # B15
 NET SWITCH(0)    LOC="P91"  | IOSTANDARD=LVTTL;                                # C0
 NET SWITCH(1)    LOC="P92"  | IOSTANDARD=LVTTL;                                # C1
