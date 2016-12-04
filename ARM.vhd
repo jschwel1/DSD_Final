@@ -26,7 +26,8 @@ entity arm is -- single cycle processor
        Instr:             in  STD_LOGIC_VECTOR(31 downto 0);
        MemWrite:          out STD_LOGIC;
        ALUResult, WriteData: out STD_LOGIC_VECTOR(31 downto 0);
-       ReadData:          in  STD_LOGIC_VECTOR(31 downto 0));
+       ReadData:          in  STD_LOGIC_VECTOR(31 downto 0);
+		 en_ARM:				  in 	STD_LOGIC);
 end;
 
 	
@@ -65,7 +66,8 @@ architecture Behavioral of ARM is
 		ALUFlags : OUT std_logic_vector(3 downto 0);
 		PC : OUT std_logic_vector(31 downto 0);
 		ALUResult : OUT std_logic_vector(31 downto 0);
-		WriteData : OUT std_logic_vector(31 downto 0)
+		WriteData : OUT std_logic_vector(31 downto 0);
+		en_ARM :		in STD_LOGIC
 		);
 	END COMPONENT;
 
@@ -106,7 +108,8 @@ begin
 		Instr => Instr,
 		ALUResult => ALUResult,
 		WriteData => WriteData,
-		ReadData => ReadData
+		ReadData => ReadData,
+		en_ARM => en_ARM
 	);
 
 end Behavioral;

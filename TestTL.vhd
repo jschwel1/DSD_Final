@@ -46,7 +46,8 @@ ARCHITECTURE behavior OF TestTL IS
          LED : OUT  std_logic_vector(7 downto 0);
          Seg7_SEG : OUT  std_logic_vector(6 downto 0);
          Seg7_DP : OUT  std_logic;
-         Seg7_AN : OUT  std_logic_vector(3 downto 0)
+         Seg7_AN : OUT  std_logic_vector(3 downto 0);
+			JOY_UP, JOY_DOWN, JOY_SELECT, JOY_LEFT : IN STD_LOGIC
         );
     END COMPONENT;
     
@@ -54,7 +55,8 @@ ARCHITECTURE behavior OF TestTL IS
    --Inputs
    signal Osc_Clk : std_logic := '0';
    signal Switch : std_logic_vector(7 downto 0) := (others => '0');
-
+	signal JOY_DOWN, JOY_SELECT, JOY_LEFT : STD_LOGIC := '1';
+	signal JOY_UP : STD_LOGIC := '0';
  	--Outputs
    signal LED : std_logic_vector(7 downto 0);
    signal Seg7_SEG : std_logic_vector(6 downto 0);
@@ -73,7 +75,11 @@ BEGIN
           LED => LED,
           Seg7_SEG => Seg7_SEG,
           Seg7_DP => Seg7_DP,
-          Seg7_AN => Seg7_AN
+          Seg7_AN => Seg7_AN,
+			 JOY_UP => JOY_UP,
+			 JOY_DOWN => JOY_DOWN,
+			 JOY_LEFT => JOY_LEFT,
+			 JOY_SELECT => JOY_SELECT
         );
 
    -- Clock process definitions

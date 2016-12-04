@@ -34,7 +34,8 @@ entity datapath is
        PC:                out STD_LOGIC_VECTOR(31 downto 0);
        Instr:             in  STD_LOGIC_VECTOR(31 downto 0);
        ALUResult, WriteData: out STD_LOGIC_VECTOR(31 downto 0);
-       ReadData:          in  STD_LOGIC_VECTOR(31 downto 0));
+       ReadData:          in  STD_LOGIC_VECTOR(31 downto 0);
+		 en_ARM:				  in STD_LOGIC);
 end;
 
 architecture Behavioral of Datapath is
@@ -70,7 +71,7 @@ architecture Behavioral of Datapath is
 	Signal PC_Sig, PC_Reg, PC_P8 : std_logic_vector(31 downto 0) := (others => '0'); -- PC signal to be loaded into the PC_Reg
 	Signal Result : std_logic_vector(31 downto 0) := (others => '0'); -- Result of ReadData from the data memory
 	Signal RA1, RA2 : std_logic_vector(3 downto 0) := (others => '0'); -- Read Addresses into the register file
-	
+	Signal WE : STD_LOGIC := '0';
 begin
 	
 	ALU: ARM_ALU PORT MAP(
@@ -82,10 +83,11 @@ begin
 	);
 	ALUResult <= ALUResult_sig;
 	
-		-- Instatiate the Register File
+	-- Instatiate the Register File
+	WE <= (RegWrite and en_ARM);
 	RF: Register_File PORT MAP(
 		clk => clk,
-		WE3 => RegWrite,
+		WE3 => WE,
 		A1 => RA1,
 		A2 => RA2,
 		A3 => Instr(15 downto 12),
@@ -136,8 +138,10 @@ begin
 			if rising_edge(clk) then
 				if (reset = '1') then
 					PC_Reg <= (others => '0');
-				else
+				elsif (en_ARM = '1') then
 					PC_Reg <= PC_Sig;
+				else
+					PC_Reg <= PC_Reg;
 				end if;
 			end if;
 	end process;

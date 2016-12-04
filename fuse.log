@@ -1,23 +1,20 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -o /home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL_isim_beh.exe -prj /home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL_beh.prj work.TestTL 
-ISim P.20131013 (signature 0xfbc00daa)
+Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -o C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL_isim_beh.exe -prj C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL_beh.prj work.TestTL 
+ISim P.20131013 (signature 0x7708f090)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/RF.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/ARM_ALU.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/Datapath.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/Controller.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/Instruction_Memory.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/HEXon7segDisp.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/Data_Memory.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/ARM.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/TopLevel.vhd" into library work
-Parsing VHDL file "/home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/RF.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM_ALU.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/Datapath.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/Controller.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/Instruction_Memory.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/HEXon7segDisp.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/Data_Memory.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/ARM.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/TopLevel.vhd" into library work
+Parsing VHDL file "C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL.vhd" into library work
 Starting static elaboration
-WARNING:HDLCompiler:1196 - "/home/local/PODS/jschwel1/EECE351/DSD_Final/Instruction_Memory.vhd" Line 48: Readline called past the end of file rom_file
 Completed static elaboration
-Fuse Memory Usage: 100496 KB
-Fuse CPU Usage: 930 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package numeric_std
@@ -35,7 +32,6 @@ Compiling architecture behavior of entity testtl
 Time Resolution for simulation is 1ps.
 Waiting for 6 sub-compilation(s) to finish...
 Compiled 23 VHDL Units
-Built simulation executable /home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL_isim_beh.exe
-Fuse Memory Usage: 674428 KB
-Fuse CPU Usage: 1080 ms
-GCC CPU Usage: 2670 ms
+Built simulation executable C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL_isim_beh.exe
+Fuse Memory Usage: 36368 KB
+Fuse CPU Usage: 906 ms
