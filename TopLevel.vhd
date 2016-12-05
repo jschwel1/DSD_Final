@@ -121,13 +121,14 @@ begin
 			end if;
 		end if;
 	end process;
+	
 	-- EN_ARM
 	process(osc_clk, run_ARM, step_sync)
 	begin
 		if (rising_edge(osc_clk)) then
 			if (run_ARM = '1' or step_sync = '1') then
 				en_ARM <= '1';
-			elsif(reset = '1' or stop = '1') then
+			else
 				en_ARM <= '0';
 			end if;
 		end if;
@@ -175,7 +176,10 @@ begin
 		if (en_ARM = '1') then
 			DM_Addr <= ALUResult(8 downto 0);
 		else
-			DM_Addr <= '0'&Switch;
+			DM_Addr(0) <= '0';
+			for i in 0 to 7 loop
+			DM_Addr(i) <= Switch(7-i);
+			end loop;
 		end if;
 	end process;
 	
@@ -209,6 +213,10 @@ begin
 	);
 
 	-- Misc connections
-	LED(7 downto 0) <= Instr(27 downto 20);	
-		
+	process(Instr)
+	begin
+		for i in 0 to 7 loop
+			LED(i) <= Instr(27-i);
+		end loop;
+	end process;
 end Behavioral;
