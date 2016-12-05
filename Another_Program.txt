@@ -1,0 +1,40 @@
+; R3 <= DM_Addr
+; R4 <= positive #
+; R5 <= negative #
+; This program will incremement through the addresses in the data memory and 
+; if the address is a multiple of 2, it will store the address # otherwise 
+; it will store the negative address #
+SUB R3, R3, R3
+SUB R4, R4, R4
+SUB R5, R5, R5
+CMP 511 R3
+BEQ #44
+ADD R4, R4, 1
+SUB R5, R5, 1
+AND R6, R3, 1
+CMP R6, 0
+STREQ R4, [R3], #0
+STRNE R5, [R3], #0
+ADD R3, R3, 1
+B #-44
+B #-8
+
+
+-------
+E0433003
+E0444004
+E0455005
+E35301FF
+0A00000B
+E2844001
+E2455001
+E2036001
+E3560000
+04834000
+14835000
+E2833001
+EAFFFFF5
+EAFFFFFE
+
+
+
