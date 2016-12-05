@@ -103,6 +103,7 @@ architecture Behavioral of TopLevel is
 	signal reset, step_sync : std_logic := '0';
 	signal run_ARM, en_ARM : std_logic := '0';
 	signal DM_Addr : STD_LOGIC_VECTOR(8 downto 0);
+	signal WE3 : STD_LOGIC := '0';
 begin
 	run <= not JOY_UP;
 	stop <= not JOY_DOWN;
@@ -176,17 +177,18 @@ begin
 		if (en_ARM = '1') then
 			DM_Addr <= ALUResult(8 downto 0);
 		else
-			DM_Addr(0) <= '0';
+			DM_Addr(8) <= '0';
 			for i in 0 to 7 loop
-			DM_Addr(i) <= Switch(7-i);
+				DM_Addr(i) <= Switch(7-i);
 			end loop;
 		end if;
 	end process;
 	
 	-- Instatiate Data Memory Element
+	WE3 <= MemWrite and en_ARM;
 	Data_Memory_Comp: Data_Memory PORT MAP(
 		clk => Osc_Clk,
-		WE => MemWrite,
+		WE => WE3,
 		A => DM_Addr,
 		WD => WriteData,
 		RD => ReadData

@@ -51,7 +51,8 @@ architecture Behavioral of Instruction_Memory is
       return instr_ROM;                                            
    end function;                                                
 
-   constant Instr_MEM : instr_ROM_type := init_ROM("program.txt");
+--   constant Instr_MEM : instr_ROM_type := init_ROM("/media/usb0/program.txt");
+	constant Instr_MEM : instr_ROM_type := init_ROM("program.txt");
 
 begin
 

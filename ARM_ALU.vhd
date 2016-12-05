@@ -70,7 +70,7 @@ begin
 		end if;
 	end process;
 
-	-- 4 to 1 mux
+	-- 4 to 1 mux 
 	process(ALU_ctrl, A, B, sum)
 	begin
 		case ALU_ctrl is
@@ -89,7 +89,7 @@ begin
 	-- Zero flag process
 	process (r_sig)
 	begin
-		if (to_integer(unsigned(r_sig)) = 0) then
+		if (signed(r_sig) = 0) then -- deleted to_integer()
 			Z <= '1';
 		else
 			Z <= '0';
