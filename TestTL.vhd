@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   14:35:42 11/28/2016
+-- Create Date:   10:55:55 12/05/2016
 -- Design Name:   
--- Module Name:   /home/local/PODS/jschwel1/EECE351/DSD_Final/TestTL.vhd
+-- Module Name:   C:/Users/Jacob/Desktop/VHDL/DSD_Final/TestTL.vhd
 -- Project Name:  Final_Project
 -- Target Device:  
 -- Tool versions:  
@@ -43,11 +43,14 @@ ARCHITECTURE behavior OF TestTL IS
     PORT(
          Osc_Clk : IN  std_logic;
          Switch : IN  std_logic_vector(7 downto 0);
+         JOY_UP : IN  std_logic;
+         JOY_DOWN : IN  std_logic;
+         JOY_LEFT : IN  std_logic;
+         JOY_SELECT : IN  std_logic;
          LED : OUT  std_logic_vector(7 downto 0);
          Seg7_SEG : OUT  std_logic_vector(6 downto 0);
          Seg7_DP : OUT  std_logic;
-         Seg7_AN : OUT  std_logic_vector(3 downto 0);
-			JOY_UP, JOY_DOWN, JOY_SELECT, JOY_LEFT : IN STD_LOGIC
+         Seg7_AN : OUT  std_logic_vector(3 downto 0)
         );
     END COMPONENT;
     
@@ -55,8 +58,11 @@ ARCHITECTURE behavior OF TestTL IS
    --Inputs
    signal Osc_Clk : std_logic := '0';
    signal Switch : std_logic_vector(7 downto 0) := (others => '0');
-	signal JOY_DOWN, JOY_SELECT, JOY_LEFT : STD_LOGIC := '1';
-	signal JOY_UP : STD_LOGIC := '0';
+   signal JOY_UP : std_logic := '0';
+   signal JOY_DOWN : std_logic := '1';
+   signal JOY_LEFT : std_logic := '1';
+   signal JOY_SELECT : std_logic := '1';
+
  	--Outputs
    signal LED : std_logic_vector(7 downto 0);
    signal Seg7_SEG : std_logic_vector(6 downto 0);
@@ -72,14 +78,14 @@ BEGIN
    uut: TopLevel PORT MAP (
           Osc_Clk => Osc_Clk,
           Switch => Switch,
+          JOY_UP => JOY_UP,
+          JOY_DOWN => JOY_DOWN,
+          JOY_LEFT => JOY_LEFT,
+          JOY_SELECT => JOY_SELECT,
           LED => LED,
           Seg7_SEG => Seg7_SEG,
           Seg7_DP => Seg7_DP,
-          Seg7_AN => Seg7_AN,
-			 JOY_UP => JOY_UP,
-			 JOY_DOWN => JOY_DOWN,
-			 JOY_LEFT => JOY_LEFT,
-			 JOY_SELECT => JOY_SELECT
+          Seg7_AN => Seg7_AN
         );
 
    -- Clock process definitions
@@ -96,9 +102,9 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-   --   wait for 100 ns;	
-
-   --   wait for Osc_Clk_period*10;
+      wait for 50 ns;	
+		JOY_UP <= '1';
+      wait for Osc_Clk_period*10;
 
       -- insert stimulus here 
 
