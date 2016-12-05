@@ -102,7 +102,7 @@ architecture Behavioral of TopLevel is
 	signal run,stop,step :std_logic := '0';
 	signal reset, step_sync : std_logic := '0';
 	signal run_ARM, en_ARM : std_logic := '0';
-	
+	signal DM_Addr : STD_LOGIC_VECTOR(8 downto 0);
 begin
 	run <= not JOY_UP;
 	stop <= not JOY_DOWN;
@@ -122,12 +122,12 @@ begin
 		end if;
 	end process;
 	-- EN_ARM
-	process(osc_clk)
+	process(osc_clk, run_ARM, step_sync)
 	begin
 		if (rising_edge(osc_clk)) then
 			if (run_ARM = '1' or step_sync = '1') then
 				en_ARM <= '1';
-			else
+			elsif(reset = '1' or stop = '1') then
 				en_ARM <= '0';
 			end if;
 		end if;
@@ -140,7 +140,20 @@ begin
 		sig_in => step,
 		sig_out => step_sync
 	);
-
+	
+	-- Hex Display Data
+	process(en_ARM, PC, ReadData)
+	begin
+		if (en_ARM = '1') then
+			HexDisp <= (others => '0');
+		else
+			HexDisp(3 downto 0) <= PC(3 downto 0);
+			HexDisp(7 downto 4) <= PC(7 downto 4);
+			HexDisp(11 downto 8) <= ReadData(3 downto 0);
+			HexDisp(15 downto 12) <= ReadData(7 downto 4);
+		end if;
+	end process;
+	
 	
 
 	-- Instantiate Hex to 7-segment conversion module
@@ -156,11 +169,21 @@ begin
 		clk => Osc_Clk
 	);
 	
+	-- Switch stuff with Data_memory
+	process(en_ARM, Switch, ALUResult)
+	begin
+		if (en_ARM = '1') then
+			DM_Addr <= ALUResult(8 downto 0);
+		else
+			DM_Addr <= '0'&Switch;
+		end if;
+	end process;
+	
 	-- Instatiate Data Memory Element
 	Data_Memory_Comp: Data_Memory PORT MAP(
 		clk => Osc_Clk,
 		WE => MemWrite,
-		A => ALUResult(8 downto 0),
+		A => DM_Addr,
 		WD => WriteData,
 		RD => ReadData
 	);
@@ -186,6 +209,6 @@ begin
 	);
 
 	-- Misc connections
-	LED(7 downto 0) <= "00000000";	
+	LED(7 downto 0) <= Instr(27 downto 20);	
 		
 end Behavioral;
