@@ -1,0 +1,1 @@
+function pad(n,t){for(;n.length<32;)n="0"+n;return n}!function(){var n=function(n){return{from:function(t){return{to:function(i){return parseInt(n,t).toString(i)}}}}};n.hex2bin=function(t){return n(t).from(16).to(2)},this.ConvertBase=n}(this);var lines=$("#txtTitle1").val().split("\n"),x="";for(i=0;i<lines.length;i++)x+=pad(ConvertBase.hex2bin(lines[i])),x+="\n";
