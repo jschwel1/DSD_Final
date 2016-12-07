@@ -42,18 +42,18 @@ architecture Behavioral of ARM_ALU is
 	
 	-- Misc Signals
 	signal sum : std_logic_vector(32 downto 0);
-	signal Mux2_1 : std_logic_vector(32 downto 0);
+	signal Mux2_1 : std_logic_vector(31 downto 0);
 	signal r_sig : std_logic_vector (31 downto 0);
 	
 	
 begin
-	-- 2 to 1 mux output
+	-- 2 to 1 mux output to change B for + or -
 	process(ALU_ctrl, B)
 	begin
 		if (ALU_ctrl(0) = '1') then
-			Mux2_1 <= not B(31) &(not B);
+			Mux2_1 <= (not B);
 		else
-			Mux2_1 <= B(31)&B;
+			Mux2_1 <= B;
 		end if;
 	end process;
 
@@ -98,17 +98,17 @@ begin
 	
 	-- Negative Flag
 	N <= r_sig(31);
-	
 
-	
 	-- Overflow Flag
 	V <= (not ( ALU_ctrl(0) xor A(31) xor B(31))) 
 			and (A(31) xor sum(31)) 
 			and (not ALU_ctrl(1));
+
 	-- Carry Flag
 	C <= (not ALU_Ctrl(1)) and sum(32);
 
 	-- Concatenate Flags
 	ALU_Flags <= N&Z&C&V;
+
 end Behavioral;
 
