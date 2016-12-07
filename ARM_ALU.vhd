@@ -64,9 +64,9 @@ begin
 		
 		
 		if (ALU_ctrl(0) = '1') then
-			sum <= std_logic_vector(resize(unsigned(Mux2_1), 33) + resize(unsigned(A), 33) +1);
+			sum <= std_logic_vector(resize(signed(Mux2_1), 33) + resize(signed(A), 33) +1);
 		else
-			sum <= std_logic_vector(resize(unsigned(Mux2_1), 33) + resize(unsigned(A), 33));
+			sum <= std_logic_vector(resize(signed(Mux2_1), 33) + resize(signed(A), 33));
 		end if;
 	end process;
 
