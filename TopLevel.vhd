@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 		 Binghamton University
--- Engineer(s): 
+-- Engineer(s): 	Jacob Schwell, Dominic Schroeder
 -- 
 -- Create Date:    23:13:36 11/13/2016 
 -- Design Name: 

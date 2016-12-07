@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 -- Company: 
--- Engineer:
+-- Engineer:	Jacob Schwell, Dominic Schroeder
 --
 -- Create Date:   10:55:55 12/05/2016
 -- Design Name:   
@@ -58,10 +58,10 @@ ARCHITECTURE behavior OF TestTL IS
    --Inputs
    signal Osc_Clk : std_logic := '0';
    signal Switch : std_logic_vector(7 downto 0) := (others => '0');
-   signal JOY_UP : std_logic := '0';
-   signal JOY_DOWN : std_logic := '1';
-   signal JOY_LEFT : std_logic := '1';
-   signal JOY_SELECT : std_logic := '1';
+   signal JOY_UP : std_logic := '0'; 		-- Set the joy stick inputs
+   signal JOY_DOWN : std_logic := '1';		-- high, since they are active
+   signal JOY_LEFT : std_logic := '1';		-- low signals, except for JOY_UP
+   signal JOY_SELECT : std_logic := '1';	-- since that starts the program
 
  	--Outputs
    signal LED : std_logic_vector(7 downto 0);
@@ -101,12 +101,16 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
+      -- hold reset state for 50 ns.
       wait for 50 ns;	
-		JOY_UP <= '1';
+		JOY_UP <= '1';	-- simulate the user letting go of the "run" button
+							-- the program will still continue until the stop button
+							-- is pressed; however, we do not worry about that in
+							-- simulation
       wait for Osc_Clk_period*10;
 
       -- insert stimulus here 
+		-- No sstimulus is necessary since it runs the program directly from the Imem
 
       wait;
    end process;

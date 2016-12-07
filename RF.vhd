@@ -1,7 +1,6 @@
---VHDL code for Register File 
---(1 of 3)
---27
---
+
+-- Written by: Jacob Schwell, Dominic Schroeder
+-- From Class exercise
 --Port Register File with Asynchronous Read
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -23,12 +22,15 @@ end Register_File;
 
 architecture Behavioral of Register_File is
 
+	-- Create an array of std_logic_vectors with a generic data_size length
 	type RegFile_type is array(0 to 2**addr_size -1) of 
 										std_logic_vector(data_size-1 downto 0);
-	Signal RegFile: RegFile_type  := (others => (others=>'0'));
+	Signal RegFile: RegFile_type  := (others => (others=>'0')); -- create a register file 
+																					-- and initialize everything
+																					-- to 0.
 	
 	begin
-	--Write in Regfile
+		-- Synchronized write in Regfile
 		process(clk, WE3, A3, WD3)
 		begin
 			if rising_edge(clk) then
@@ -39,6 +41,7 @@ architecture Behavioral of Register_File is
 		end process;
 			
 		-- Read Address
+		-- If the address is 15, push the input R15 to the output for that port
 		process(A1,A2,R15, RegFile)
 			begin
 			-- Read 1 from Address 1

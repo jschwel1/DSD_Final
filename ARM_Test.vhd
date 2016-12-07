@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 -- Company: 
--- Engineer:
+-- Engineer:	Jacob Schwell, Dominic Schroeder
 --
 -- Create Date:   20:55:30 11/24/2016
 -- Design Name:   
@@ -25,6 +25,13 @@
 -- to guarantee that the testbench will bind correctly to the post-implementation 
 -- simulation model.
 --------------------------------------------------------------------------------
+
+-- This test bench was created to test the functionality of the arm without the
+-- use of the Instruction or Datamemory. If because obsolete as soon as they were 
+-- connnected and ARM machine code programs were written into program.txt; however,
+-- it was useful for testing small programs to make sure the controller and datapath
+-- were working as expected.
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
@@ -35,6 +42,7 @@ USE ieee.numeric_std.ALL;
 ENTITY ARM_Test IS
 END ARM_Test;
  
+
 ARCHITECTURE behavior OF ARM_Test IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
@@ -126,9 +134,10 @@ BEGIN
      -- wait for clk_period*10;
 
       -- insert stimulus here 
+		-- Loop through the instruction set arrray and wait for a clock cycle between each instruction
 		for i in instr_set'range loop
 			Instr <= instr_set(i);
-			wait for clk_period*1;
+			wait for clk_period;
 		end loop;
       wait;
    end process;

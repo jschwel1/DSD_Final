@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 		 Binghamton University
--- Engineer(s): 
+-- Engineer(s):  Jacob Schwell, Dominic Schroeder
 -- 
 -- Create Date:    23:13:36 11/13/2016 
 -- Design Name: 
@@ -33,6 +33,7 @@ end;
 	
 	
 architecture Behavioral of ARM is
+	-- The arm is made up of the controller and datapath, so they are declared here:
 	COMPONENT controller
 	PORT(
 		clk : IN std_logic;
@@ -76,7 +77,7 @@ architecture Behavioral of ARM is
 	signal RegSrc, ImmSrc, ALUControl : std_logic_vector(1 downto 0) := "00";
 	signal ALUFlags : std_logic_vector(3 downto 0) := "0000";
 begin
-
+	-- Instantiate the Controller and Datapath in the ARM Processor
 	CTRLR: controller PORT MAP(
 		clk => clk,
 		reset => reset,

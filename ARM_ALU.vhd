@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 
--- Engineer: 
+-- Engineer: Jacob Schwell, Dominic Schroeder
 -- 
 -- Create Date:    13:47:50 11/14/2016 
 -- Design Name: 
@@ -41,9 +41,9 @@ architecture Behavioral of ARM_ALU is
 	signal V, C, N, Z : std_logic := '0';
 	
 	-- Misc Signals
-	signal sum : std_logic_vector(32 downto 0);
-	signal Mux2_1 : std_logic_vector(31 downto 0);
-	signal r_sig : std_logic_vector (31 downto 0);
+	signal sum : std_logic_vector(32 downto 0); -- 1 bit larger than allotted for the output to hold onto the carry-out bit
+	signal Mux2_1 : std_logic_vector(31 downto 0); -- output from mux to determine decide ADD vs SUB
+	signal r_sig : std_logic_vector (31 downto 0); -- Result from the 4-to-1 Mux
 	
 	
 begin
@@ -70,7 +70,7 @@ begin
 		end if;
 	end process;
 
-	-- 4 to 1 mux 
+	-- 4 to 1 mux (AND, OR, SUB, ADD)
 	process(ALU_ctrl, A, B, sum)
 	begin
 		case ALU_ctrl is
@@ -79,9 +79,10 @@ begin
 			when "10" =>
 				r_sig <= A and B;
 			when others =>
-				r_sig <= sum(31 downto 0);
+				r_sig <= sum(31 downto 0); -- The Adder output goes to both 00 & 01
 		end case;
 	end process;
+	-- Output the result to result port
 	result <= r_sig;
 
 
@@ -89,7 +90,8 @@ begin
 	-- Zero flag process
 	process (r_sig)
 	begin
-		if (signed(r_sig) = 0) then -- deleted to_integer()
+		-- Z goes high if the result is 0
+		if (signed(r_sig) = 0) then 
 			Z <= '1';
 		else
 			Z <= '0';
@@ -97,14 +99,20 @@ begin
 	end process;
 	
 	-- Negative Flag
+	-- Goes high if the MSB of the result is high
 	N <= r_sig(31);
 
 	-- Overflow Flag
+	-- Three inputs ANDed together
+	--			1) ALU_ctrl(0) xor A(31) xor B(31)
+	--			2) A(31) xor sum(31)
+	--			3) not ALU_ctrl(1)
 	V <= (not ( ALU_ctrl(0) xor A(31) xor B(31))) 
 			and (A(31) xor sum(31)) 
 			and (not ALU_ctrl(1));
 
 	-- Carry Flag
+	-- If the operation was an ADD/SUB and the MSB of sub was high
 	C <= (not ALU_Ctrl(1)) and sum(32);
 
 	-- Concatenate Flags

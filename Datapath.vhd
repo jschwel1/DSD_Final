@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 		 Binghamton University
--- Engineer(s): 
+-- Engineer(s): 	 Jacob Schwell, Dominic Schroeder
 -- 
 -- Create Date:    23:13:36 11/13/2016 
 -- Design Name: 
@@ -39,7 +39,7 @@ entity datapath is
 end;
 
 architecture Behavioral of Datapath is
-
+	-- Declare components
 	COMPONENT ARM_ALU
 	PORT(
 		A : IN std_logic_vector(31 downto 0);
@@ -65,7 +65,7 @@ architecture Behavioral of Datapath is
 		);
 	END COMPONENT;
 	
-	-- Sources A & B for the ALU
+	-- Internal signal declarations
 	Signal a,b : std_logic_vector(31 downto 0) := (others => '0'); -- inputs to the ALU
 	Signal R_out2, ALUResult_sig  : std_logic_vector(31 downto 0) := (others => '0'); -- Output of RegFile RD2
 	Signal PC_Sig, PC_Reg, PC_P8 : std_logic_vector(31 downto 0) := (others => '0'); -- PC signal to be loaded into the PC_Reg
@@ -74,6 +74,7 @@ architecture Behavioral of Datapath is
 	Signal WE : STD_LOGIC := '0';
 begin
 	
+	-- Instantiate the ALU
 	ALU: ARM_ALU PORT MAP(
 		A => a,
 		B => b,
@@ -96,13 +97,16 @@ begin
 		RD1 => a,
 		RD2 => r_out2
 	);
--- INSTRUCTION STUFF--------------------------------------
+	
+---------------- Datapath Logic --------------------------------------
 -- Extends and ALU src process	
 	process(r_out2,ALUSrc,ImmSrc, Instr)
 		begin
+			-- If/Else describes 2-to-1 Mux for ALU input SrcB
 			if (ALUSrc='0') then
 				b <= R_out2;
 			else
+				-- The extend component for immediate sources:
 				if (ImmSrc = "00") then
 					b <= (others => '0');
 					b(7 downto 0) <= instr(7 downto 0);
@@ -118,21 +122,25 @@ begin
 	end process;
 	
 -- ALU STUFF
+	-- The data going into the DataMemory (WriteData Output)
+	-- is the 2nd output, R2, from the RegFile
 	writeData <= R_out2;
+	
 -- Data from ALU/Data reg
 	process(readData, ALUResult_Sig, memtoReg)
 	begin 
+		-- The 2-to-1 Mux deciding if the result signal should be from taken
+		-- from the DataMemory output or the ALU output
 		if (memtoReg = '1') then
 			result <= readData;
 		else
 			result <= ALUResult_sig;
 		end if;
 	end process;
--- Read Data
+
 
 -- PROGRAM COUNTER STUFF----------------------------------
 --PC Register
-
 	process(clk,PC_Sig, PC_Reg, reset)
 		begin
 			if rising_edge(clk) then
@@ -148,7 +156,7 @@ begin
 -- PC output	
 	PC<=PC_Reg;
 
---PC Stuff
+--PC register input signal
 	process(PCSrc, PC_Reg, result)
 		begin
 			if PCSrc= '1' then
@@ -161,8 +169,8 @@ begin
 			
 			
 			
--- Read addresses for RegFile
--- RA1
+-- RegFile input ports
+-- RA1 uses the PC for a branch instruction, otherwise it will use a register
 	process(Instr, RegSrc)
 	begin
 		if (RegSrc(0) = '1') then
@@ -172,7 +180,8 @@ begin
 		end if;
 	end process;
 	
--- RA2
+-- RA2 uses the RegSrc to determine where in the specific instruction to look for 
+-- the second register address.
 	process(Instr, RegSrc)
 	begin
 		if (RegSrc(1) = '1') then
@@ -182,7 +191,7 @@ begin
 		end if;
 	end process;
 	
--- R15
+-- R15 intput used to access the PC for branching and other instructions
 	PC_P8 <= std_logic_vector(unsigned(PC_Reg) + 8);
 end Behavioral;
 

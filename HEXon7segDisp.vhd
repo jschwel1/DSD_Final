@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 		 Binghamton University
--- Engineer: 		 
+-- Engineer: 		 Jacob Schwell, Dominic Schroeder
 -- 
 -- Module Name:    HEXon7segDisp - Behavioral 
 -- Project Name:   Lab3 - 7-Segment Display Controller

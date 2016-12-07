@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 		 Binghamton University
--- Engineer(s): 
+-- Engineer(s): 	Jacob Schwell, Dominic Schroeder
 -- 
 -- Create Date:    23:13:36 11/13/2016 
 -- Design Name: 
@@ -40,17 +40,19 @@ architecture Behavioral of Controller is
 	signal cond : std_logic_vector(3 downto 0) := Instr(31 downto 28);
 	signal op : std_logic_vector(1 downto 0) := Instr(27 downto 26);
 	signal funct : std_logic_vector(5 downto 0) := Instr(25 downto 20);
-	--signal Rn : std_logic_vector(3 downto 0) := Instr(19 downto 16);
 	signal Rd : std_logic_vector(3 downto 0) := Instr(15 downto 12);
+	
 	-- Other internal signals
 	signal FlagW : std_logic_vector(1 downto 0) := "00"; -- [1] NZ (3:2) 
 																		  -- [0] CV (1:0)
 	signal PCS, RegW, MemW, ALUOp, Branch : std_logic := '0';
 	
+	-- Used for case statement with Op,Funct(5), Funct(0)
+	-- and Branch, MemtoReg, MemW, ALUSrc, ImmSrc, RegW, and ALUOp
 	signal MainDecoder_out : std_logic_vector(9 downto 0);
 	signal MainDecoder_in :std_logic_vector(3 downto 0);
 	
-	-- Conditional Logic Signals
+	-- Conditional/Flag signals
 	signal Flags : std_logic_vector(3 downto 0) := (others => '0');
 	signal CondEx, Z, N, C, V: std_logic := '0';
 	signal FlagWrite : std_logic_vector (1 downto 0) := "00";
@@ -62,7 +64,6 @@ begin
 	cond <= instr(31 downto 28);
 	op <= Instr(27 downto 26);
 	funct <= instr(25 downto 20);
---	Rn <= Instr(19 downto 16);
 	Rd <= Instr(15 downto 12);
 
 	--------------------- Decoder --------------------------
@@ -92,14 +93,14 @@ begin
 		end case;
 	end process;
 	-- Split up MainDecoder_out into appropriate signals
-	Branch <= MainDecoder_out(9);
+	Branch <= MainDecoder_out(9); -- internal signal
 	MemtoReg <= MainDecoder_out(8); -- OUTPUT
-	MemW <= MainDecoder_out(7);
+	MemW <= MainDecoder_out(7); -- internal signal
 	ALUSrc <= MainDecoder_out(6);	-- OUTPUT
 	ImmSrc <= MainDecoder_out(5 downto 4); -- OUTPUT
-	RegW <= MainDecoder_out(3);
+	RegW <= MainDecoder_out(3); -- internal signal
 	RegSrc <= MainDecoder_out(2 downto 1); -- OUTPUT
-	ALUOp <= MainDecoder_out(0);
+	ALUOp <= MainDecoder_out(0); -- internal signal
 	
 	-- ALU Decoder
 	process(ALUOp, funct(4 downto 0))
@@ -151,7 +152,7 @@ begin
 					ALUControl <= "01";
 					FlagW <= "11";
 					NoWrite <= '1';
-						
+				-- Catch-all needed to prevent a latch		
 				when others =>
 					ALUControl <= "00";
 					FlagW <= "00";
@@ -165,6 +166,8 @@ begin
 	-- PCS = ((Rd == 15) & RegW) | Branch
 	process(Rd, RegW, Branch)
 	begin
+		-- Decide when to take PC+4 or Branch to an address the results input
+		-- This if/else statement describes the 2-to-1 Mux in front of the PC Register
 		if (((to_integer(unsigned(Rd)) = 15) and RegW = '1') or Branch = '1') then
 			PCS <= '1';
 		else
@@ -181,6 +184,7 @@ begin
 	Z <= Flags(2);
 	C <= Flags(1);
 	V <= Flags(0);
+	-- Using the flags and the condition of the instruction, decide if it should conditionally execute
 	process(Cond, Flags, N, Z, C, V)
 	begin
 		case cond is
@@ -222,10 +226,12 @@ begin
 	-- Update flags
 	FlagWrite(0) <= FlagW(0) and CondEx;
 	FlagWrite(1) <= FlagW(1) and CondEx;
+	
 	process (clk,ALUFlags, FlagW, FlagWrite, CondEx)
 	begin
+		-- Update the flags (if supposed to)
 		if (rising_edge(clk)) then
-			if (reset = '1') then
+			if (reset = '1') then	-- Reset into the controller clears all the flags
 				Flags <= (others => '0');
 			else
 				if (flagWrite(1) = '1') then
