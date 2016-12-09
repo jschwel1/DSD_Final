@@ -61,6 +61,8 @@ begin
 	-- get the sum
 	process(ALU_ctrl, A, B, Mux2_1)
 	begin
+		-- the B input has already been inverted. The Carry-in input adds 1 or 0 to the sum, so it can
+		-- work easily as addition or subtraction (with the Mux above to invert B).
 		if (ALU_ctrl(0) = '1') then
 			sum <= std_logic_vector(resize(signed(Mux2_1), 33) + resize(signed(A), 33) +1);
 		else
@@ -80,10 +82,9 @@ begin
 				r_sig <= sum(31 downto 0); -- The Adder output goes to both 00 & 01
 		end case;
 	end process;
+	
 	-- Output the result to result port
 	result <= r_sig;
-
-
 
 	-- Zero flag process
 	process (r_sig)
