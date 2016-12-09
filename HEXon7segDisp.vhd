@@ -23,6 +23,7 @@ end HEXon7segDisp;
 
 architecture Behavioral of HEXon7segDisp is
 
+	-- Create and initialize all the internal signals
 	signal cntr : std_logic_vector (10 downto 0) := (others => '0') ;
 	signal hexsel : std_logic_vector (3 downto 0):= (others => '0') ;
 	alias muxsel1 : std_logic_vector (1 downto 0) is cntr(10 downto 9);

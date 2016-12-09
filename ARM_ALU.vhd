@@ -61,8 +61,6 @@ begin
 	-- get the sum
 	process(ALU_ctrl, A, B, Mux2_1)
 	begin
-		
-		
 		if (ALU_ctrl(0) = '1') then
 			sum <= std_logic_vector(resize(signed(Mux2_1), 33) + resize(signed(A), 33) +1);
 		else

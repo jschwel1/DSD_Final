@@ -61,6 +61,7 @@ architecture Behavioral of Controller is
 begin
 
 	-- signals are direct connections to the instr input
+	-- break up instr input into its respective parts
 	cond <= instr(31 downto 28);
 	op <= Instr(27 downto 26);
 	funct <= instr(25 downto 20);
@@ -81,6 +82,8 @@ begin
 			-- STR Imm (Reg does not work)
 			when "0100" | "0110" =>
 				MainDecoder_out <= "0011010100";
+			-- LDR can be combined; however, splitting them up allows a register offset
+			-- or an immediate offset. This is not physically possible for a store with the current hardware.
 			-- LDR Imm
 			when "0101" =>
 				MainDecoder_out <= "0101011000";
@@ -92,7 +95,8 @@ begin
 				MainDecoder_out <= "1001100010";
 		end case;
 	end process;
-	-- Split up MainDecoder_out into appropriate signals
+	
+	-- Split up MainDecoder_out into appropriate signals (from chart in microarchitecture slide)
 	Branch <= MainDecoder_out(9); -- internal signal
 	MemtoReg <= MainDecoder_out(8); -- OUTPUT
 	MemW <= MainDecoder_out(7); -- internal signal
@@ -185,9 +189,12 @@ begin
 	C <= Flags(1);
 	V <= Flags(0);
 	-- Using the flags and the condition of the instruction, decide if it should conditionally execute
+	-- The broken up Flags bits need to be included in the sensitivity list or iSim will not recognize them
+	-- as updated when Flags updates for some reason.
 	process(Cond, Flags, N, Z, C, V)
 	begin
 		case cond is
+			-- The hex values representing the conditional part of the instruction
 			when x"0" =>
 				CondEx <= Z;
 			when x"1" =>
@@ -224,9 +231,12 @@ begin
 	end process;
 	
 	-- Update flags
+	-- flag registers only update if the instruction is supposed to rewrite them
+	-- and the instruction is supposed to execute
 	FlagWrite(0) <= FlagW(0) and CondEx;
 	FlagWrite(1) <= FlagW(1) and CondEx;
 	
+	-- Update the flags registers
 	process (clk,ALUFlags, FlagW, FlagWrite, CondEx)
 	begin
 		-- Update the flags (if supposed to)

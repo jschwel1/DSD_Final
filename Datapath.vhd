@@ -171,6 +171,7 @@ begin
 			
 -- RegFile input ports
 -- RA1 uses the PC for a branch instruction, otherwise it will use a register
+-- 2-to-1 Mux at input R1 of RegFile
 	process(Instr, RegSrc)
 	begin
 		if (RegSrc(0) = '1') then
@@ -182,6 +183,7 @@ begin
 	
 -- RA2 uses the RegSrc to determine where in the specific instruction to look for 
 -- the second register address.
+-- 2-to-1 Mux at input R2 of RegFile
 	process(Instr, RegSrc)
 	begin
 		if (RegSrc(1) = '1') then
